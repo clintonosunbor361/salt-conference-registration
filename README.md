@@ -5,7 +5,7 @@ Responsive registration experience for SALT Conference 2026, with Google Sheets 
 ## Event
 
 - Date: 19 September 2026
-- Time: 11:00 AM–4:00 PM
+- Time: 10:00 AM–3:00 PM WAT
 - Venue: One Church International, Beside Landwey Building, Sangotedo, Lagos
 
 ## Registration flow
