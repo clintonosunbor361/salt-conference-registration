@@ -740,6 +740,7 @@
       h1 { font-size: clamp(42px, 12vw, 56px); }
       .subheading { font-size: 19px; }
       .divider { margin: 27px 0; }
+      .input-shell input { font-size: 16px; }
 
       .confirmation { padding-top: 8px; }
       .confirmation h2 { font-size: clamp(43px, 12vw, 58px); }
@@ -860,7 +861,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 12 4 4L19 6"/></svg>
           </span>
           <h2 id="confirmation-title" tabindex="-1">You&rsquo;re registered.</h2>
-          <p class="confirmation-copy">Your place at SALT Conference 2026 is confirmed. We&rsquo;ll send event information to <strong id="confirmation-email"></strong>.</p>
+          <p class="confirmation-copy" id="confirmation-copy">Your place at SALT Conference 2026 is confirmed. We&rsquo;ve sent event information to <strong id="confirmation-email"></strong>.</p>
         </header>
 
         <div class="merch-intro">
@@ -894,6 +895,7 @@
     const formPanel = document.querySelector('.form-panel');
     const confirmation = document.querySelector('#registration-confirmation');
     const confirmationTitle = document.querySelector('#confirmation-title');
+    const confirmationCopy = document.querySelector('#confirmation-copy');
     const confirmationEmail = document.querySelector('#confirmation-email');
     const inputs = [...form.querySelectorAll('input:not([type="radio"])')];
     const membershipField = document.querySelector('#membership-field');
@@ -945,8 +947,15 @@
       });
     });
 
-    function showConfirmation() {
+    function showConfirmation(alreadyRegistered = false) {
       confirmationEmail.textContent = form.elements.email.value.trim();
+      confirmationTitle.textContent = alreadyRegistered ? 'Already registered.' : 'You’re registered.';
+      confirmationCopy.childNodes[0].textContent = alreadyRegistered
+        ? 'We found an existing SALT Conference 2026 registration for '
+        : 'Your place at SALT Conference 2026 is confirmed. We’ve sent event information to ';
+      confirmationEmail.nextSibling.textContent = alreadyRegistered
+        ? '. No new registration was created.'
+        : '.';
       confirmation.hidden = false;
       [...formPanel.children].forEach(child => {
         if (child !== confirmation) child.hidden = true;
@@ -1001,9 +1010,11 @@
 
         button.classList.remove('is-loading');
         buttonLabel.textContent = 'Registered';
-        feedback.textContent = 'Registration and confirmation email completed.';
+        feedback.textContent = result.alreadyRegistered
+          ? 'You are already registered.'
+          : 'Registration and confirmation email completed.';
         feedback.classList.add('is-success');
-        showConfirmation();
+        showConfirmation(result.alreadyRegistered);
       } catch (error) {
         button.classList.remove('is-loading');
         buttonLabel.textContent = 'Complete Registration';

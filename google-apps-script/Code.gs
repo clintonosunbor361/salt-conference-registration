@@ -59,8 +59,19 @@ function doPost(event) {
     lock.waitLock(10000);
     try {
       rowNumber = findRegistrationRow_(sheet, registration.registrationId);
-      if (rowNumber && sheet.getRange(rowNumber, 7).getValue() === 'Confirmation sent') {
-        return jsonResponse_({ ok: true, duplicate: true });
+      if (rowNumber) {
+        const registrationStatus = sheet.getRange(rowNumber, 7).getValue();
+        if (registrationStatus === 'Confirmation sent' || registrationStatus === 'Sending confirmation') {
+          return jsonResponse_({ ok: true, alreadyRegistered: true });
+        }
+      } else {
+        rowNumber = findRegistrationRowByEmail_(sheet, registration.email);
+        if (rowNumber) {
+          const emailStatus = sheet.getRange(rowNumber, 7).getValue();
+          if (emailStatus === 'Confirmation sent' || emailStatus === 'Sending confirmation') {
+            return jsonResponse_({ ok: true, alreadyRegistered: true });
+          }
+        }
       }
 
       if (!rowNumber) {
@@ -76,6 +87,7 @@ function doPost(event) {
         ]);
         rowNumber = sheet.getLastRow();
       }
+      sheet.getRange(rowNumber, 7).setValue('Sending confirmation');
     } finally {
       lock.releaseLock();
     }
@@ -180,6 +192,16 @@ function findRegistrationRow_(sheet, registrationId) {
   if (sheet.getLastRow() < 2) return 0;
   const match = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1)
     .createTextFinder(registrationId)
+    .matchEntireCell(true)
+    .findNext();
+  return match ? match.getRow() : 0;
+}
+
+function findRegistrationRowByEmail_(sheet, email) {
+  if (sheet.getLastRow() < 2) return 0;
+  const match = sheet.getRange(2, 4, sheet.getLastRow() - 1, 1)
+    .createTextFinder(email)
+    .matchCase(false)
     .matchEntireCell(true)
     .findNext();
   return match ? match.getRow() : 0;

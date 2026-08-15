@@ -78,7 +78,11 @@ export default {
         return json({ ok: false, error: result.error || 'Registration could not be completed.' }, 502);
       }
 
-      return json({ ok: true, registrationId: registration.registrationId });
+      return json({
+        ok: true,
+        registrationId: registration.registrationId,
+        alreadyRegistered: Boolean(result.alreadyRegistered)
+      });
     } catch (error) {
       console.error('Registration service error:', error instanceof Error ? error.message : error);
       const message = error instanceof Error && error.name === 'AbortError'
