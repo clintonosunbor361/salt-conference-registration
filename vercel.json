@@ -5,6 +5,13 @@
       "maxDuration": 30
     }
   },
+  "redirects": [
+    {
+      "source": "/merch",
+      "destination": "https://selar.com/m/SALTONECHURCH",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/",
