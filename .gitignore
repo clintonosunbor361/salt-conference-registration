@@ -1,0 +1,11 @@
+# Local conference deck and generated previews
+index.html
+salt-conference-cover.pdf
+salt-preview.png
+signup-form-*.png
+assets/salt-dove.png
+
+# Local tooling
+.agents/
+.vercel/
+

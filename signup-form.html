@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8d8d6">
+  <title>Register for SALT Conference 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #111214;
+      --paper: #f2f2f0;
+      --canvas: #d4d4d1;
+      --muted: #78797c;
+      --line: rgba(17,18,20,.1);
+      --orange: #ff9a3d;
+      --pink: #e9a2cd;
+      --blue: #86c9ff;
+      --green: #20ad3a;
+      --error: #b8323b;
+      --success: #147c2a;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-width: 320px; background: var(--canvas); }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      padding: 32px;
+      color: var(--ink);
+      font-family: Satoshi, Outfit, "Avenir Next", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,255,255,.72), transparent 30%),
+        radial-gradient(circle at 88% 88%, rgba(255,255,255,.42), transparent 28%),
+        var(--canvas);
+    }
+
+    .signup-shell {
+      position: relative;
+      width: min(100%, 940px);
+      min-height: 650px;
+      display: grid;
+      grid-template-columns: .88fr 1.12fr;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,.78);
+      border-radius: 40px;
+      background: var(--paper);
+      box-shadow: 0 34px 90px rgba(26,27,30,.19), inset 0 1px #fff;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .story-panel {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      min-width: 0;
+      padding: 48px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      background:
+        radial-gradient(circle at 6% 4%, rgba(255,158,57,.22), transparent 35%),
+        radial-gradient(circle at 102% 92%, rgba(89,185,255,.18), transparent 36%),
+        #101113;
+    }
+
+    .story-panel::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -20%;
+      opacity: .56;
+      background: repeating-radial-gradient(ellipse at 110% -5%, transparent 0 15px, rgba(255,255,255,.055) 16px 17px, transparent 18px 30px);
+      transform: rotate(-8deg);
+    }
+
+    .story-panel::after {
+      content: "S";
+      position: absolute;
+      z-index: -1;
+      right: -34px;
+      bottom: -95px;
+      color: rgba(255,255,255,.035);
+      font-size: 390px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.1em;
+    }
+
+    .story-panel.has-poster {
+      padding: 0;
+      background: #050505;
+    }
+
+    .story-panel.has-poster::before,
+    .story-panel.has-poster::after { display: none; }
+
+    .story-image-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #050505;
+    }
+
+    .story-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center center;
+      filter: saturate(.94) contrast(1.03);
+      will-change: transform, opacity;
+    }
+
+    .story-image-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(0,0,0,.04), transparent 30%, transparent 78%, rgba(0,0,0,.14));
+    }
+
+    .brandline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #b7b8bb;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(255,255,255,.06);
+      font-size: 12px;
+      letter-spacing: 0;
+    }
+
+    .story-copy { margin: auto 0; padding: 70px 0; }
+
+    .story-title {
+      max-width: 390px;
+      margin: 0;
+      font-size: clamp(52px, 6vw, 78px);
+      font-weight: 800;
+      line-height: .9;
+      letter-spacing: -.07em;
+    }
+
+    .story-title span { display: block; }
+
+    .story-title .gradient-word {
+      color: transparent;
+      background: linear-gradient(95deg, #ffac4e, #f0b0d9 54%, #8ed1ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .story-text {
+      max-width: 310px;
+      margin: 24px 0 0;
+      color: #aaaab0;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .story-text .word { opacity: .14; }
+
+    .signal-window {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 18px;
+    }
+
+    .signal-track {
+      display: flex;
+      width: max-content;
+      gap: 30px;
+      color: #8b8c91;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .signal-track span::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      margin: 0 12px 1px 0;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px rgba(32,173,58,.55);
+    }
+
+    .form-panel {
+      position: relative;
+      min-width: 0;
+      padding: 54px clamp(36px, 5vw, 64px) 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #fff;
+    }
+
+    .form-heading { max-width: 40rem; }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 5vw, 65px);
+      font-weight: 800;
+      line-height: .94;
+      letter-spacing: -.065em;
+      text-wrap: balance;
+    }
+
+    .subheading {
+      margin: 10px 0 0;
+      color: #454649;
+      font-size: clamp(17px, 2vw, 22px);
+      font-weight: 500;
+      letter-spacing: -.025em;
+    }
+
+    .description {
+      max-width: 420px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .description strong { color: var(--success); font-weight: 650; }
+
+    .event-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .fact {
+      min-width: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 13px 14px;
+      border: 1px solid rgba(17,18,20,.065);
+      border-radius: 15px;
+      background: rgba(248,248,247,.88);
+      box-shadow: inset 0 1px #fff;
+    }
+
+    .fact--venue { grid-column: 1 / -1; }
+
+    .fact svg {
+      flex: none;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      color: #737478;
+    }
+
+    .fact-copy { min-width: 0; }
+
+    .fact-label {
+      display: block;
+      margin-bottom: 3px;
+      color: #8a8b8e;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .fact-value {
+      display: block;
+      color: #242529;
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .event-editorial {
+      margin-top: 25px;
+      padding: 21px 0 1px;
+      border-top: 1px solid rgba(17,18,20,.12);
+    }
+
+    .event-date {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: end;
+      gap: 13px;
+    }
+
+    .event-day {
+      color: #17181a;
+      font-size: clamp(52px, 5vw, 72px);
+      font-weight: 800;
+      line-height: .76;
+      letter-spacing: -.075em;
+    }
+
+    .event-month {
+      padding-bottom: 2px;
+      color: #343539;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .event-month span { display: block; color: #8b8c8f; font-size: 10px; letter-spacing: .16em; }
+
+    .event-meta-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      color: #25262a;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .event-meta-line::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: #17181a;
+    }
+
+    .event-venue {
+      max-width: 420px;
+      margin: 9px 0 0 34px;
+      color: #747579;
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 30px 0;
+      background: linear-gradient(90deg, rgba(17,18,20,.14), transparent);
+    }
+
+    .field { margin-bottom: 17px; }
+
+    .field-label,
+    .choice-field legend {
+      display: block;
+      margin: 0 0 9px;
+      padding: 0;
+      color: #3f4044;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .input-shell {
+      position: relative;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(17,18,20,.065);
+      border-radius: 18px;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 8px 18px rgba(31,32,34,.055), inset 0 1px #fff;
+      transform-origin: left center;
+      transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
+    }
+
+    .input-shell::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: linear-gradient(90deg, var(--orange), var(--pink), var(--blue));
+      transition: transform 360ms cubic-bezier(.2,.75,.2,1);
+    }
+
+    .input-shell:hover {
+      border-color: rgba(17,18,20,.12);
+      background: #fff;
+      box-shadow: 0 11px 24px rgba(31,32,34,.085), inset 0 1px #fff;
+    }
+
+    .input-shell:focus-within {
+      border-color: rgba(17,18,20,.13);
+      background: #fff;
+      box-shadow: 0 13px 28px rgba(31,32,34,.1), inset 0 1px #fff;
+    }
+
+    .input-shell:focus-within::after { transform: scaleX(1); }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      height: 58px;
+      border: 0;
+      outline: 0;
+      padding: 0 18px;
+      color: #17181a;
+      background: transparent;
+      font: inherit;
+      font-size: 15px;
+      caret-color: #d983ba;
+    }
+
+    input::placeholder { color: #96979a; opacity: 1; }
+    input:-webkit-autofill { -webkit-text-fill-color: #17181a; -webkit-box-shadow: 0 0 0 1000px #fff inset; }
+
+    .field.is-invalid .input-shell { border-color: rgba(184,50,59,.48); box-shadow: 0 0 0 4px rgba(184,50,59,.07); }
+
+    .error {
+      min-height: 0;
+      margin: 0;
+      padding: 0 8px;
+      color: var(--error);
+      font-size: 12px;
+      line-height: 0;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 180ms ease, transform 180ms ease, line-height 180ms ease, padding 180ms ease;
+    }
+
+    .field.is-invalid .error { padding-top: 7px; line-height: 1.35; opacity: 1; transform: translateY(0); }
+
+    .choice-field {
+      min-width: 0;
+      margin: 7px 0 14px;
+      padding: 0;
+      border: 0;
+    }
+
+    .choice-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .choice-option {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .choice-option input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .choice-option span {
+      min-height: 60px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(17,18,20,.08);
+      border-radius: 18px;
+      color: #6f7074;
+      background: rgba(248,248,247,.9);
+      box-shadow: inset 0 1px #fff;
+      font-size: 13px;
+      font-weight: 650;
+      transition: color 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+    }
+
+    .choice-option:hover span { transform: translateY(-1px); border-color: rgba(17,18,20,.14); background: #fff; }
+
+    .choice-option input:checked + span {
+      border-color: #17181b;
+      color: #fff;
+      background: #17181b;
+      box-shadow: 0 9px 18px rgba(17,18,20,.16), inset 0 1px rgba(255,255,255,.14);
+    }
+
+    .choice-option input:focus-visible + span { outline: 3px solid rgba(72,159,222,.38); outline-offset: 2px; }
+    .choice-field.is-invalid .choice-group { border-radius: 17px; box-shadow: 0 0 0 4px rgba(184,50,59,.07); }
+
+    .choice-error {
+      min-height: 0;
+      margin: 0;
+      padding: 0 8px;
+      color: var(--error);
+      font-size: 12px;
+      line-height: 0;
+      opacity: 0;
+      transition: opacity 180ms ease, line-height 180ms ease, padding 180ms ease;
+    }
+
+    .choice-field.is-invalid .choice-error { padding-top: 7px; line-height: 1.35; opacity: 1; }
+
+    .submit {
+      position: relative;
+      width: 100%;
+      min-height: 62px;
+      margin-top: 8px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 20px;
+      padding: 0 20px;
+      color: #fff;
+      background: #151619;
+      box-shadow: 0 16px 28px rgba(21,22,25,.2), inset 0 1px rgba(255,255,255,.13);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: box-shadow 200ms ease, filter 200ms ease;
+    }
+
+    .submit::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-105%);
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,.13), transparent);
+      transition: transform 650ms ease;
+    }
+
+    .submit:hover:not(:disabled) { filter: brightness(1.13); box-shadow: 0 19px 34px rgba(21,22,25,.26), inset 0 1px rgba(255,255,255,.16); }
+    .submit:hover:not(:disabled)::before { transform: translateX(105%); }
+    .submit:focus-visible { outline: 3px solid rgba(72,159,222,.38); outline-offset: 3px; }
+    .submit:disabled { cursor: wait; }
+
+    .button-content { position: relative; display: grid; grid-template-columns: 24px 1fr 24px; align-items: center; }
+    .arrow { width: 21px; height: 21px; justify-self: end; }
+    .spinner { display: none; width: 19px; height: 19px; justify-self: end; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; }
+    .submit.is-loading .arrow { display: none; }
+    .submit.is-loading .spinner { display: block; }
+
+    .feedback-window {
+      min-height: 38px;
+      margin-top: 15px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #6f7074;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .feedback-message { margin: 0; }
+    .feedback-message.is-success { color: var(--success); font-weight: 600; }
+
+    .privacy {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 0 0;
+      color: #85868a;
+      font-size: 11px;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .privacy svg { flex: none; width: 14px; height: 14px; margin-top: 1px; }
+    .privacy strong { color: #5e5f62; font-weight: 650; }
+
+    .no-gsap .story-copy, .no-gsap .form-heading, .no-gsap .field, .no-gsap .submit, .no-gsap .privacy { opacity: 1; transform: none; }
+
+    @media (max-width: 760px) {
+      body { display: block; min-height: 100svh; padding: 0; background: var(--paper); }
+
+      .signup-shell {
+        width: 100%;
+        min-height: 100svh;
+        display: block;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .story-panel { min-height: 255px; padding: 28px 24px; }
+      .story-panel.has-poster {
+        position: sticky;
+        z-index: 1;
+        top: 0;
+        height: clamp(300px, 42svh, 390px);
+        min-height: 300px;
+        padding: 0;
+      }
+      .story-image { object-fit: cover; object-position: center 43%; }
+      .brandline { font-size: 10px; }
+      .story-copy { margin: 34px 0 22px; padding: 0; }
+      .story-title { max-width: 100%; font-size: clamp(47px, 14vw, 66px); }
+      .story-title span { display: inline; }
+      .story-text { max-width: 340px; margin-top: 16px; font-size: 13px; }
+      .signal-window { display: none; }
+
+      .form-panel {
+        position: relative;
+        z-index: 2;
+        min-height: calc(100svh - 270px);
+        padding: 36px 22px 28px;
+        border-radius: 28px 28px 0 0;
+        margin-top: -34px;
+        background: #fff;
+        box-shadow: 0 -22px 46px rgba(0,0,0,.16);
+        scroll-margin-top: 0;
+      }
+
+      .form-heading { max-width: none; }
+      h1 { font-size: clamp(42px, 12vw, 56px); }
+      .subheading { font-size: 19px; }
+      .divider { margin: 27px 0; }
+    }
+
+    @media (max-width: 380px) {
+      .story-panel { min-height: 225px; }
+      .story-panel.has-poster { height: 280px; min-height: 280px; }
+      .story-copy { margin: 22px 0 12px; }
+      .story-text { display: none; }
+      .form-panel { min-height: calc(100svh - 246px); padding: 30px 18px 22px; }
+      .description { font-size: 13px; }
+      .divider { margin: 24px 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { animation: spin .7s linear infinite; }
+  </style>
+</head>
+<body class="no-gsap">
+  <main class="signup-shell" aria-labelledby="signup-title">
+    <aside class="story-panel has-poster" aria-label="SALT Conference save-the-date artwork">
+      <div class="story-image-wrap">
+        <img class="story-image" src="assets/salt-save-the-date.png" alt="The SALT Conference save-the-date artwork for 19 September 2026">
+      </div>
+    </aside>
+
+    <section class="form-panel" id="updates">
+      <header class="form-heading">
+        <h1 id="signup-title">Register for SALT 2026</h1>
+        <p class="subheading">Secure your place at the conference</p>
+        <p class="description">Complete your details below to register for <strong>SALT Conference 2026.</strong></p>
+
+        <section class="event-editorial" aria-label="Event details">
+          <div class="event-date">
+            <span class="event-day">19</span>
+            <span class="event-month">September<span>2026</span></span>
+          </div>
+          <div class="event-meta-line">Saturday · 11:00 AM–4:00 PM</div>
+          <p class="event-venue">One Church International<br>Beside Landwey Building, Sangotedo, Lagos</p>
+        </section>
+      </header>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <form id="signup-form" novalidate>
+        <div class="field" data-field="name">
+          <label class="field-label" for="full-name">Full name</label>
+          <div class="input-shell">
+            <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Enter your full name" aria-describedby="name-error" required>
+          </div>
+          <p class="error" id="name-error" aria-live="polite"></p>
+        </div>
+
+        <div class="field" data-field="email">
+          <label class="field-label" for="email">Email address</label>
+          <div class="input-shell">
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Enter your email address" aria-describedby="email-error" required>
+          </div>
+          <p class="error" id="email-error" aria-live="polite"></p>
+        </div>
+
+        <div class="field" data-field="phone">
+          <label class="field-label" for="phone">Phone number</label>
+          <div class="input-shell">
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Enter your phone number" aria-describedby="phone-error" required>
+          </div>
+          <p class="error" id="phone-error" aria-live="polite"></p>
+        </div>
+
+        <fieldset class="choice-field" id="membership-field">
+          <legend>Are you a member of One Church?</legend>
+          <div class="choice-group">
+            <label class="choice-option"><input type="radio" name="oneChurchMember" value="yes" required><span>Yes</span></label>
+            <label class="choice-option"><input type="radio" name="oneChurchMember" value="no" required><span>No</span></label>
+          </div>
+          <p class="choice-error" id="membership-error" aria-live="polite">Please select Yes or No.</p>
+        </fieldset>
+
+        <button class="submit" type="submit">
+          <span class="button-content">
+            <span aria-hidden="true"></span>
+            <span class="button-label">Complete Registration</span>
+            <svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+            <span class="spinner" aria-hidden="true"></span>
+          </span>
+        </button>
+
+        <div class="feedback-window" aria-live="polite"><p class="feedback-message">Your registration details are secure.</p></div>
+      </form>
+
+      <p class="privacy">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <span><strong>We respect your privacy.</strong><br>We’ll only use your details for registration and essential event communication.</span>
+      </p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    const form = document.querySelector('#signup-form');
+    const shell = document.querySelector('.signup-shell');
+    const button = form.querySelector('.submit');
+    const buttonLabel = button.querySelector('.button-label');
+    const feedback = document.querySelector('.feedback-message');
+    const inputs = [...form.querySelectorAll('input:not([type="radio"])')];
+    const membershipField = document.querySelector('#membership-field');
+    const membershipInputs = [...membershipField.querySelectorAll('input[type="radio"]')];
+    const messages = {
+      name: 'Please enter your full name.',
+      email: 'Please enter a valid email address.',
+      phone: 'Please enter your phone number.'
+    };
+
+    function isValid(input) {
+      const value = input.value.trim();
+      if (!value) return false;
+      if (input.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      return true;
+    }
+
+    function setFieldState(input, showError = true) {
+      const field = input.closest('.field');
+      const error = field.querySelector('.error');
+      const valid = isValid(input);
+      field.classList.toggle('is-invalid', showError && !valid);
+      input.setAttribute('aria-invalid', String(showError && !valid));
+      error.textContent = showError && !valid ? messages[input.name] : '';
+      return valid;
+    }
+
+    inputs.forEach(input => {
+      const inputShell = input.closest('.input-shell');
+      input.addEventListener('blur', () => {
+        setFieldState(input);
+        if (window.gsap) gsap.to(inputShell, { scale: 1, x: 0, duration: .28, ease: 'power2.out' });
+      });
+      input.addEventListener('focus', () => {
+        if (window.gsap) gsap.to(inputShell, { scale: 1.012, x: 4, duration: .28, ease: 'power2.out' });
+      });
+      input.addEventListener('input', () => {
+        if (input.closest('.field').classList.contains('is-invalid')) setFieldState(input);
+      });
+    });
+
+    membershipInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        membershipField.classList.remove('is-invalid');
+        if (window.gsap) gsap.fromTo(input.nextElementSibling, { scale: .97 }, { scale: 1, duration: .35, ease: 'back.out(2)' });
+      });
+    });
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      feedback.classList.remove('is-success');
+      const contactsValid = inputs.map(input => setFieldState(input)).every(Boolean);
+      const membershipValid = membershipInputs.some(input => input.checked);
+      membershipField.classList.toggle('is-invalid', !membershipValid);
+      if (!contactsValid || !membershipValid) {
+        const firstInvalid = inputs.find(input => !isValid(input));
+        if (firstInvalid) {
+          firstInvalid.focus();
+          if (window.gsap) gsap.fromTo(firstInvalid.closest('.input-shell'), { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
+        } else {
+          membershipInputs[0].focus();
+          if (window.gsap) gsap.fromTo(membershipField, { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
+        }
+        return;
+      }
+
+      button.disabled = true;
+      button.classList.add('is-loading');
+      buttonLabel.textContent = 'Submitting…';
+
+      window.setTimeout(() => {
+        button.classList.remove('is-loading');
+        buttonLabel.textContent = 'Registered';
+        button.disabled = false;
+        feedback.textContent = 'Registration received. We’ll send your confirmation shortly.';
+        feedback.classList.add('is-success');
+        if (window.gsap) {
+          gsap.fromTo(feedback, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: .55, ease: 'power3.out' });
+          gsap.fromTo(button, { scale: .985 }, { scale: 1, duration: .5, ease: 'back.out(2)' });
+        }
+      }, 900);
+    });
+
+    function initMotion() {
+      if (!window.gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      document.body.classList.remove('no-gsap');
+
+      gsap.set(['.form-heading', '.field', '.submit', '.privacy'], { opacity: 0 });
+      const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      intro
+        .from(shell, { y: 24, scale: .98, opacity: 0, duration: .85 })
+        .from('.story-image', { scale: .86, opacity: .25, duration: 1.1, ease: 'power2.out' }, '-=.58')
+        .to('.form-heading', { opacity: 1, duration: .01 }, '-=.7')
+        .from('.form-heading > *', { y: 18, opacity: 0, stagger: .1, duration: .55 }, '<')
+        .to('.field', { opacity: 1, stagger: .07, duration: .01 }, '-=.28')
+        .from('.field', { x: 26, scale: .96, stagger: .07, duration: .5 }, '<')
+        .to(['.submit', '.privacy'], { opacity: 1, stagger: .08, duration: .42 }, '-=.2');
+
+      if (matchMedia('(pointer:fine)').matches) {
+        const tiltX = gsap.quickTo(shell, 'rotationX', { duration: .55, ease: 'power3.out' });
+        const tiltY = gsap.quickTo(shell, 'rotationY', { duration: .55, ease: 'power3.out' });
+        shell.addEventListener('pointermove', event => {
+          const rect = shell.getBoundingClientRect();
+          tiltX((.5 - (event.clientY - rect.top) / rect.height) * 2.2);
+          tiltY((((event.clientX - rect.left) / rect.width) - .5) * 2.2);
+        });
+        shell.addEventListener('pointerleave', () => { tiltX(0); tiltY(0); });
+      }
+
+      button.addEventListener('pointerenter', () => gsap.to(button, { y: -3, duration: .25, ease: 'power2.out' }));
+      button.addEventListener('pointerleave', () => gsap.to(button, { y: 0, duration: .3, ease: 'power2.out' }));
+      button.addEventListener('pointerdown', () => gsap.to(button, { scale: .985, duration: .12 }));
+      button.addEventListener('pointerup', () => gsap.to(button, { scale: 1, duration: .25, ease: 'back.out(2)' }));
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMotion);
+    else initMotion();
+  </script>
+</body>
+</html>
