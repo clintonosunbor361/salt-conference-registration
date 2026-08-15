@@ -234,6 +234,10 @@
       text-wrap: balance;
     }
 
+    @media (min-width: 761px) {
+      .title-line { display: block; }
+    }
+
     .subheading {
       margin: 10px 0 0;
       color: #454649;
@@ -375,6 +379,46 @@
       height: 1px;
       margin: 30px 0;
       background: linear-gradient(90deg, rgba(17,18,20,.14), transparent);
+    }
+
+    .form-tabs { display: none; }
+    .form-step { display: block; }
+
+    @media (min-width: 761px) {
+      .form-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        margin: 0 0 24px;
+        padding: 6px;
+        border-radius: 18px;
+        background: #f1f1ef;
+      }
+
+      .form-tab {
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 0;
+        border-radius: 14px;
+        padding: 0 14px;
+        color: #77787b;
+        background: transparent;
+        font: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+      }
+
+      .form-tab:hover { color: #343539; }
+      .form-tab[aria-selected="true"] { color: #fff; background: #17181b; box-shadow: 0 8px 18px rgba(17,18,20,.16); }
+      .form-tab:focus-visible { outline: 3px solid rgba(72,159,222,.38); outline-offset: 2px; }
+      .tab-index { font-size: 10px; opacity: .58; }
+      .form-step { display: none; }
+      .form-step.is-active { display: block; }
     }
 
     .field { margin-bottom: 17px; }
@@ -569,6 +613,12 @@
       font-weight: 700;
       cursor: pointer;
       transition: box-shadow 200ms ease, filter 200ms ease;
+    }
+
+    .continue-button { display: none; }
+
+    @media (min-width: 761px) {
+      .continue-button { display: block; }
     }
 
     .submit::before {
@@ -826,7 +876,7 @@
 
     <section class="form-panel" id="updates">
       <header class="form-heading">
-        <h1 id="signup-title">Register for SALT Conference 2026</h1>
+        <h1 id="signup-title"><span class="title-line">Register For</span> <span class="title-line">SALT Conference</span> <span class="title-line">2026</span></h1>
         <p class="subheading">Secure your place at the conference</p>
         <p class="description">Complete your details below to register for <strong>SALT Conference 2026.</strong></p>
 
@@ -846,65 +896,82 @@
       <div class="divider" aria-hidden="true"></div>
 
       <form id="signup-form" novalidate>
-        <div class="field" data-field="name">
-          <label class="field-label" for="full-name">Full name</label>
-          <div class="input-shell">
-            <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Enter your full name" aria-describedby="name-error" required>
-          </div>
-          <p class="error" id="name-error" aria-live="polite"></p>
+        <div class="form-tabs" role="tablist" aria-label="Registration sections">
+          <button class="form-tab" id="personal-tab" type="button" role="tab" aria-selected="true" aria-controls="personal-step" data-step-target="personal"><span class="tab-index">01</span><span>Personal Details</span></button>
+          <button class="form-tab" id="conference-tab" type="button" role="tab" aria-selected="false" aria-controls="conference-step" data-step-target="conference" tabindex="-1"><span class="tab-index">02</span><span>Conference Details</span></button>
         </div>
 
-        <div class="field" data-field="email">
-          <label class="field-label" for="email">Email address</label>
-          <div class="input-shell">
-            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Enter your email address" aria-describedby="email-error" required>
+        <section class="form-step is-active" id="personal-step" role="tabpanel" aria-labelledby="personal-tab" data-step="personal">
+          <div class="field" data-field="name">
+            <label class="field-label" for="full-name">Full name</label>
+            <div class="input-shell">
+              <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Enter your full name" aria-describedby="name-error" required>
+            </div>
+            <p class="error" id="name-error" aria-live="polite"></p>
           </div>
-          <p class="error" id="email-error" aria-live="polite"></p>
-        </div>
 
-        <div class="field" data-field="phone">
-          <label class="field-label" for="phone">Phone number</label>
-          <div class="input-shell">
-            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Enter your phone number" aria-describedby="phone-error" required>
+          <div class="field" data-field="email">
+            <label class="field-label" for="email">Email address</label>
+            <div class="input-shell">
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Enter your email address" aria-describedby="email-error" required>
+            </div>
+            <p class="error" id="email-error" aria-live="polite"></p>
           </div>
-          <p class="error" id="phone-error" aria-live="polite"></p>
-        </div>
 
-        <fieldset class="choice-field" id="gender-field">
-          <legend>Gender</legend>
-          <div class="choice-group">
-            <label class="choice-option"><input type="radio" name="gender" value="male" required><span>Male</span></label>
-            <label class="choice-option"><input type="radio" name="gender" value="female" required><span>Female</span></label>
+          <div class="field" data-field="phone">
+            <label class="field-label" for="phone">Phone number</label>
+            <div class="input-shell">
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Enter your phone number" aria-describedby="phone-error" required>
+            </div>
+            <p class="error" id="phone-error" aria-live="polite"></p>
           </div>
-          <p class="choice-error" id="gender-error" aria-live="polite">Please select your gender.</p>
-        </fieldset>
 
-        <fieldset class="choice-field" id="membership-field">
-          <legend>Are you a member of One Church?</legend>
-          <div class="choice-group">
-            <label class="choice-option"><input type="radio" name="oneChurchMember" value="yes" required><span>Yes</span></label>
-            <label class="choice-option"><input type="radio" name="oneChurchMember" value="no" required><span>No</span></label>
+          <button class="submit continue-button" type="button" data-continue>
+            <span class="button-content">
+              <span aria-hidden="true"></span>
+              <span>Continue</span>
+              <svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+            </span>
+          </button>
+        </section>
+
+        <section class="form-step" id="conference-step" role="tabpanel" aria-labelledby="conference-tab" data-step="conference">
+          <fieldset class="choice-field" id="gender-field">
+            <legend>Gender</legend>
+            <div class="choice-group">
+              <label class="choice-option"><input type="radio" name="gender" value="male" required><span>Male</span></label>
+              <label class="choice-option"><input type="radio" name="gender" value="female" required><span>Female</span></label>
+            </div>
+            <p class="choice-error" id="gender-error" aria-live="polite">Please select your gender.</p>
+          </fieldset>
+
+          <fieldset class="choice-field" id="membership-field">
+            <legend>Are you a member of One Church?</legend>
+            <div class="choice-group">
+              <label class="choice-option"><input type="radio" name="oneChurchMember" value="yes" required><span>Yes</span></label>
+              <label class="choice-option"><input type="radio" name="oneChurchMember" value="no" required><span>No</span></label>
+            </div>
+            <p class="choice-error" id="membership-error" aria-live="polite">Please select Yes or No.</p>
+          </fieldset>
+
+          <div class="field" data-field="looking-forward-to">
+            <label class="field-label" for="looking-forward-to">What are you looking forward to?<span class="optional-label">(Optional)</span></label>
+            <div class="input-shell textarea-shell">
+              <textarea id="looking-forward-to" name="lookingForwardTo" rows="4" maxlength="500" placeholder="Share what you are most excited about"></textarea>
+            </div>
           </div>
-          <p class="choice-error" id="membership-error" aria-live="polite">Please select Yes or No.</p>
-        </fieldset>
 
-        <div class="field" data-field="looking-forward-to">
-          <label class="field-label" for="looking-forward-to">What are you looking forward to?<span class="optional-label">(Optional)</span></label>
-          <div class="input-shell textarea-shell">
-            <textarea id="looking-forward-to" name="lookingForwardTo" rows="4" maxlength="500" placeholder="Share what you are most excited about"></textarea>
-          </div>
-        </div>
+          <button class="submit" type="submit">
+            <span class="button-content">
+              <span aria-hidden="true"></span>
+              <span class="button-label">Complete Registration</span>
+              <svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+              <span class="spinner" aria-hidden="true"></span>
+            </span>
+          </button>
 
-        <button class="submit" type="submit">
-          <span class="button-content">
-            <span aria-hidden="true"></span>
-            <span class="button-label">Complete Registration</span>
-            <svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
-            <span class="spinner" aria-hidden="true"></span>
-          </span>
-        </button>
-
-        <div class="feedback-window" aria-live="polite"><p class="feedback-message">Your registration details are secure.</p></div>
+          <div class="feedback-window" aria-live="polite"><p class="feedback-message">Your registration details are secure.</p></div>
+        </section>
       </form>
 
       <p class="privacy">
@@ -946,8 +1013,11 @@
   <script>
     const form = document.querySelector('#signup-form');
     const shell = document.querySelector('.signup-shell');
-    const button = form.querySelector('.submit');
+    const button = form.querySelector('button[type="submit"]');
     const buttonLabel = button.querySelector('.button-label');
+    const continueButton = form.querySelector('[data-continue]');
+    const tabs = [...form.querySelectorAll('[role="tab"]')];
+    const steps = [...form.querySelectorAll('.form-step')];
     const feedback = document.querySelector('.feedback-message');
     const formPanel = document.querySelector('.form-panel');
     const confirmation = document.querySelector('#registration-confirmation');
@@ -982,6 +1052,27 @@
       return valid;
     }
 
+    function activateStep(stepName, focusTab = false) {
+      tabs.forEach(tab => {
+        const active = tab.dataset.stepTarget === stepName;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        if (active && focusTab) tab.focus();
+      });
+      steps.forEach(step => step.classList.toggle('is-active', step.dataset.step === stepName));
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateStep(tab.dataset.stepTarget));
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        const nextTab = tabs[(index + direction + tabs.length) % tabs.length];
+        activateStep(nextTab.dataset.stepTarget, true);
+      });
+    });
+
     inputs.forEach(input => {
       const inputShell = input.closest('.input-shell');
       input.addEventListener('blur', () => {
@@ -1004,6 +1095,17 @@
           if (window.gsap) gsap.fromTo(input.nextElementSibling, { scale: .97 }, { scale: 1, duration: .35, ease: 'back.out(2)' });
         });
       });
+    });
+
+    continueButton.addEventListener('click', () => {
+      const contactsValid = inputs.map(input => setFieldState(input)).every(Boolean);
+      if (!contactsValid) {
+        const firstInvalid = inputs.find(input => !isValid(input));
+        firstInvalid.focus();
+        if (window.gsap) gsap.fromTo(firstInvalid.closest('.input-shell'), { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
+        return;
+      }
+      activateStep('conference', true);
     });
 
     function showConfirmation(alreadyRegistered = false) {
@@ -1040,10 +1142,12 @@
       if (!contactsValid || invalidChoiceFields.length) {
         const firstInvalid = inputs.find(input => !isValid(input));
         if (firstInvalid) {
+          activateStep('personal');
           firstInvalid.focus();
           if (window.gsap) gsap.fromTo(firstInvalid.closest('.input-shell'), { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
         } else {
           const firstInvalidChoice = invalidChoiceFields[0];
+          activateStep('conference');
           firstInvalidChoice.querySelector('input[type="radio"]').focus();
           if (window.gsap) gsap.fromTo(firstInvalidChoice, { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
         }
