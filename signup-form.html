@@ -567,6 +567,7 @@
 
     .feedback-message { margin: 0; }
     .feedback-message.is-success { color: var(--success); font-weight: 600; }
+    .feedback-message.is-error { color: var(--error); font-weight: 600; }
 
     .privacy {
       display: flex;
@@ -581,6 +582,115 @@
 
     .privacy svg { flex: none; width: 14px; height: 14px; margin-top: 1px; }
     .privacy strong { color: #5e5f62; font-weight: 650; }
+
+    [hidden] { display: none !important; }
+
+    .confirmation { width: 100%; align-self: center; }
+    .confirmation-header { max-width: 430px; margin-bottom: 27px; }
+
+    .confirmation-mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      border-radius: 50%;
+      color: #fff;
+      background: #17181a;
+      box-shadow: 0 12px 24px rgba(17,18,20,.18);
+    }
+
+    .confirmation-mark svg { width: 23px; height: 23px; }
+
+    .confirmation h2 {
+      margin: 0;
+      font-size: clamp(42px, 5vw, 60px);
+      font-weight: 800;
+      line-height: .92;
+      letter-spacing: -.06em;
+    }
+
+    .confirmation-copy {
+      margin: 14px 0 0;
+      color: #6f7074;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .confirmation-copy strong { color: #292a2d; font-weight: 650; }
+
+    .merch-intro {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 13px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(17,18,20,.12);
+    }
+
+    .merch-eyebrow {
+      display: block;
+      margin-bottom: 4px;
+      color: #8a8b8e;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .merch-intro h3 { margin: 0; font-size: 22px; font-weight: 750; letter-spacing: -.035em; }
+
+    .shop-link {
+      flex: none;
+      color: #242529;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .shop-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .shop-link:focus-visible, .merch-card:focus-visible { outline: 3px solid rgba(72,159,222,.42); outline-offset: 3px; }
+
+    .merch-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+
+    .merch-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      border-radius: 18px;
+      color: #fff;
+      background: #17181a;
+      box-shadow: 0 12px 24px rgba(21,22,25,.13);
+      text-decoration: none;
+    }
+
+    .merch-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 600ms cubic-bezier(.2,.75,.2,1), filter 300ms ease;
+    }
+
+    .merch-card::after {
+      content: "Shop merch  ↗";
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(12,13,15,.72);
+      backdrop-filter: blur(10px);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .merch-card:hover img { transform: scale(1.035); filter: saturate(1.06); }
+    .confirmation-note { margin: 13px 0 0; color: #929397; font-size: 10px; line-height: 1.45; text-align: center; }
 
     .no-gsap .story-copy, .no-gsap .form-heading, .no-gsap .field, .no-gsap .submit, .no-gsap .privacy { opacity: 1; transform: none; }
 
@@ -630,6 +740,23 @@
       h1 { font-size: clamp(42px, 12vw, 56px); }
       .subheading { font-size: 19px; }
       .divider { margin: 27px 0; }
+
+      .confirmation { padding-top: 8px; }
+      .confirmation h2 { font-size: clamp(43px, 12vw, 58px); }
+      .confirmation-header { margin-bottom: 24px; }
+      .merch-grid {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(78%, 1fr);
+        grid-template-columns: none;
+        overflow-x: auto;
+        gap: 12px;
+        margin: 0 -22px;
+        padding: 0 22px 14px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+      }
+      .merch-grid::-webkit-scrollbar { display: none; }
+      .merch-card { scroll-snap-align: start; border-radius: 20px; }
     }
 
     @media (max-width: 380px) {
@@ -726,6 +853,34 @@
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
         <span><strong>We respect your privacy.</strong><br>We’ll only use your details for registration and essential event communication.</span>
       </p>
+
+      <section class="confirmation" id="registration-confirmation" aria-labelledby="confirmation-title" hidden>
+        <header class="confirmation-header">
+          <span class="confirmation-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 12 4 4L19 6"/></svg>
+          </span>
+          <h2 id="confirmation-title" tabindex="-1">You&rsquo;re registered.</h2>
+          <p class="confirmation-copy">Your place at SALT Conference 2026 is confirmed. We&rsquo;ll send event information to <strong id="confirmation-email"></strong>.</p>
+        </header>
+
+        <div class="merch-intro">
+          <div>
+            <span class="merch-eyebrow">Before you go</span>
+            <h3>Meet the SALT merch.</h3>
+          </div>
+          <a class="shop-link" href="https://selar.com/m/SALTONECHURCH" target="_blank" rel="noopener noreferrer">Shop all &rarr;</a>
+        </div>
+
+        <div class="merch-grid" aria-label="SALT merchandise campaigns">
+          <a class="merch-card" href="https://selar.com/m/SALTONECHURCH" target="_blank" rel="noopener noreferrer" aria-label="Shop the white SALT T-shirt collection on Selar">
+            <img src="assets/salt-merch-white-tee.png" alt="White SALT merchandise T-shirt against a blue sky" loading="lazy">
+          </a>
+          <a class="merch-card" href="https://selar.com/m/SALTONECHURCH" target="_blank" rel="noopener noreferrer" aria-label="Shop the Made Whole SALT event T-shirt on Selar">
+            <img src="assets/salt-merch-made-whole.png" alt="Black Made Whole SALT event T-shirt, shown from the front and back" loading="lazy">
+          </a>
+        </div>
+        <p class="confirmation-note">Merchandise purchases are completed securely on Selar.</p>
+      </section>
     </section>
   </main>
 
@@ -736,6 +891,10 @@
     const button = form.querySelector('.submit');
     const buttonLabel = button.querySelector('.button-label');
     const feedback = document.querySelector('.feedback-message');
+    const formPanel = document.querySelector('.form-panel');
+    const confirmation = document.querySelector('#registration-confirmation');
+    const confirmationTitle = document.querySelector('#confirmation-title');
+    const confirmationEmail = document.querySelector('#confirmation-email');
     const inputs = [...form.querySelectorAll('input:not([type="radio"])')];
     const membershipField = document.querySelector('#membership-field');
     const membershipInputs = [...membershipField.querySelectorAll('input[type="radio"]')];
@@ -744,6 +903,9 @@
       email: 'Please enter a valid email address.',
       phone: 'Please enter your phone number.'
     };
+    const registrationId = window.crypto && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `salt-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
     function isValid(input) {
       const value = input.value.trim();
@@ -783,9 +945,24 @@
       });
     });
 
-    form.addEventListener('submit', event => {
+    function showConfirmation() {
+      confirmationEmail.textContent = form.elements.email.value.trim();
+      confirmation.hidden = false;
+      [...formPanel.children].forEach(child => {
+        if (child !== confirmation) child.hidden = true;
+      });
+      shell.classList.add('is-complete');
+      shell.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      window.setTimeout(() => confirmationTitle.focus({ preventScroll: true }), 350);
+      if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.fromTo(confirmation, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .65, ease: 'power3.out' });
+        gsap.from('.merch-card', { y: 18, opacity: 0, stagger: .1, duration: .55, delay: .15, ease: 'power3.out' });
+      }
+    }
+
+    form.addEventListener('submit', async event => {
       event.preventDefault();
-      feedback.classList.remove('is-success');
+      feedback.classList.remove('is-success', 'is-error');
       const contactsValid = inputs.map(input => setFieldState(input)).every(Boolean);
       const membershipValid = membershipInputs.some(input => input.checked);
       membershipField.classList.toggle('is-invalid', !membershipValid);
@@ -805,17 +982,38 @@
       button.classList.add('is-loading');
       buttonLabel.textContent = 'Submitting…';
 
-      window.setTimeout(() => {
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            registrationId,
+            name: form.elements.name.value.trim(),
+            email: form.elements.email.value.trim(),
+            phone: form.elements.phone.value.trim(),
+            oneChurchMember: form.elements.oneChurchMember.value
+          })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || 'We could not complete your registration. Please try again.');
+        }
+
         button.classList.remove('is-loading');
         buttonLabel.textContent = 'Registered';
-        button.disabled = false;
-        feedback.textContent = 'Registration received. We’ll send your confirmation shortly.';
+        feedback.textContent = 'Registration and confirmation email completed.';
         feedback.classList.add('is-success');
-        if (window.gsap) {
-          gsap.fromTo(feedback, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: .55, ease: 'power3.out' });
-          gsap.fromTo(button, { scale: .985 }, { scale: 1, duration: .5, ease: 'back.out(2)' });
+        showConfirmation();
+      } catch (error) {
+        button.classList.remove('is-loading');
+        buttonLabel.textContent = 'Complete Registration';
+        button.disabled = false;
+        feedback.textContent = error instanceof Error ? error.message : 'We could not complete your registration. Please try again.';
+        feedback.classList.add('is-error');
+        if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          gsap.fromTo(feedback, { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: .4, ease: 'power2.out' });
         }
-      }, 900);
+      }
     });
 
     function initMotion() {

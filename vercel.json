@@ -1,5 +1,10 @@
 {
   "cleanUrls": true,
+  "functions": {
+    "api/register.mjs": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/",

@@ -8,3 +8,5 @@ assets/salt-dove.png
 # Local tooling
 .agents/
 .vercel/
+.env*
+!.env.example
