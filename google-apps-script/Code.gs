@@ -1,4 +1,5 @@
 const REGISTRATION_SHEET = 'Registrations';
+const REGISTRATION_BUILD = '2026-08-15-email-dedupe-v2';
 const REGISTRATION_HEADERS = [
   'Registration ID',
   'Registered At',
@@ -199,12 +200,16 @@ function findRegistrationRow_(sheet, registrationId) {
 
 function findRegistrationRowByEmail_(sheet, email) {
   if (sheet.getLastRow() < 2) return 0;
-  const match = sheet.getRange(2, 4, sheet.getLastRow() - 1, 1)
-    .createTextFinder(email)
-    .matchCase(false)
-    .matchEntireCell(true)
-    .findNext();
-  return match ? match.getRow() : 0;
+  const targetEmail = normalizeEmail_(email);
+  const emailValues = sheet.getRange(2, 4, sheet.getLastRow() - 1, 1).getDisplayValues();
+  for (let index = 0; index < emailValues.length; index += 1) {
+    if (normalizeEmail_(emailValues[index][0]) === targetEmail) return index + 2;
+  }
+  return 0;
+}
+
+function normalizeEmail_(value) {
+  return String(value || '').trim().toLowerCase();
 }
 
 function clean_(value, maxLength) {
@@ -226,6 +231,7 @@ function escapeHtml_(value) {
 }
 
 function jsonResponse_(body) {
+  body.build = REGISTRATION_BUILD;
   return ContentService
     .createTextOutput(JSON.stringify(body))
     .setMimeType(ContentService.MimeType.JSON);
