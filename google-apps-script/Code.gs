@@ -157,7 +157,12 @@ function sendConfirmationEmail_(registration) {
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:8px 20px;border-radius:16px;background:#f4f4f2;font-size:14px;line-height:1.5">' +
           '<tr><td style="width:76px;padding:12px 8px 12px 0;color:#77787b;vertical-align:top">Date</td><td style="padding:12px 0;font-weight:700;vertical-align:top">19 September 2026</td></tr>' +
           '<tr><td style="width:76px;padding:12px 8px 12px 0;border-top:1px solid #dededb;color:#77787b;vertical-align:top">Time</td><td style="padding:12px 0;border-top:1px solid #dededb;font-weight:700;vertical-align:top">10:00 AM WAT</td></tr>' +
-          '<tr><td style="width:76px;padding:12px 8px 12px 0;border-top:1px solid #dededb;color:#77787b;vertical-align:top">Location</td><td style="padding:12px 0;border-top:1px solid #dededb;vertical-align:top"><a href="' + mapUrl + '" style="display:inline-block;color:#17181a;text-decoration:none"><span style="font-size:17px;vertical-align:top">📍</span> <strong>One Church International</strong><br><span style="padding-left:23px;color:#707175;text-decoration:underline">KM 23 Lekki - Epe Expy, beside LANDWEY Building, Sangotedo, Lagos</span></a></td></tr>' +
+        '</table>' +
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;border-radius:16px;background:#f4f4f2;font-size:14px;line-height:1.5">' +
+          '<tr>' +
+            '<td style="width:28px;padding:20px 0 20px 20px;font-size:18px;vertical-align:top"><a href="' + mapUrl + '" style="color:#17181a;text-decoration:none">📍</a></td>' +
+            '<td style="padding:20px 20px 20px 8px;vertical-align:top"><a href="' + mapUrl + '" style="display:block;color:#17181a;text-decoration:none"><strong style="font-size:15px">One Church International</strong><br><span style="color:#707175">KM 23 Lekki - Epe Expy, beside LANDWEY Building, Sangotedo, Lagos</span><br><span style="display:inline-block;margin-top:8px;color:#17181a;font-size:12px;font-weight:700;text-decoration:underline">Open in Google Maps →</span></a></td>' +
+          '</tr>' +
         '</table>' +
         '<a href="' + merchUrl + '" style="display:inline-block;margin-top:24px;padding:15px 22px;border-radius:14px;background:#17181a;color:#ffffff;font-weight:700;text-decoration:none">Explore SALT merch →</a>' +
         '<p style="margin:28px 0 0;color:#747579;font-size:13px;line-height:1.5">We look forward to seeing you.<br><strong style="color:#343539">SALT Conference Team</strong></p>' +
