@@ -129,15 +129,15 @@ function sendConfirmationEmail_(registration) {
   const firstName = registration.name.split(/\s+/)[0];
   const subject = "You're registered for SALT Conference 2026";
   const merchUrl = 'https://salt-conference-registration.vercel.app/merch';
-  const mapUrl = 'https://www.google.com/maps/search/?api=1&query=One%20Church%20International%2C%20Beside%20Landwey%20Building%2C%20Sangotedo%2C%20Lagos';
+  const mapUrl = 'https://www.google.com/maps/search/?api=1&query=One%20Church%20International%2C%20KM%2023%20Lekki%20-%20Epe%20Expy%2C%20beside%20LANDWEY%20Building%2C%20Eti-Osa%2C%20Sangotedo%20105101%2C%20Lagos';
   const plainBody = [
     'Hello ' + firstName + ',',
     '',
     'Your registration for SALT Conference 2026 is confirmed.',
     '',
     'Date: 19 September 2026',
-    'Time: 10:00 AM–3:00 PM WAT',
-    'Location: One Church International, Beside Landwey Building, Sangotedo, Lagos',
+    'Time: 10:00 AM WAT',
+    'Location: One Church International, KM 23 Lekki - Epe Expy, beside LANDWEY Building, Eti-Osa, Sangotedo 105101, Lagos',
     'Google Maps: ' + mapUrl,
     '',
     'Explore SALT merchandise: ' + merchUrl,
@@ -156,8 +156,8 @@ function sendConfirmationEmail_(registration) {
         '<p style="margin:0 0 22px;font-size:17px;line-height:1.6">Hello ' + escapeHtml_(firstName) + ', your place at SALT Conference 2026 is confirmed.</p>' +
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:8px 20px;border-radius:16px;background:#f4f4f2;font-size:14px;line-height:1.5">' +
           '<tr><td style="width:76px;padding:12px 8px 12px 0;color:#77787b;vertical-align:top">Date</td><td style="padding:12px 0;font-weight:700;vertical-align:top">19 September 2026</td></tr>' +
-          '<tr><td style="width:76px;padding:12px 8px 12px 0;border-top:1px solid #dededb;color:#77787b;vertical-align:top">Time</td><td style="padding:12px 0;border-top:1px solid #dededb;font-weight:700;vertical-align:top">10:00 AM–3:00 PM WAT</td></tr>' +
-          '<tr><td style="width:76px;padding:12px 8px 12px 0;border-top:1px solid #dededb;color:#77787b;vertical-align:top">Location</td><td style="padding:12px 0;border-top:1px solid #dededb;vertical-align:top"><a href="' + mapUrl + '" style="color:#17181a;font-weight:700;text-decoration:underline">One Church International</a><br><span style="color:#707175">Beside Landwey Building, Sangotedo, Lagos</span></td></tr>' +
+          '<tr><td style="width:76px;padding:12px 8px 12px 0;border-top:1px solid #dededb;color:#77787b;vertical-align:top">Time</td><td style="padding:12px 0;border-top:1px solid #dededb;font-weight:700;vertical-align:top">10:00 AM WAT</td></tr>' +
+          '<tr><td style="width:76px;padding:12px 8px 12px 0;border-top:1px solid #dededb;color:#77787b;vertical-align:top">Location</td><td style="padding:12px 0;border-top:1px solid #dededb;vertical-align:top"><a href="' + mapUrl + '" style="color:#17181a;font-weight:700;text-decoration:underline">One Church International</a><br><span style="color:#707175">KM 23 Lekki - Epe Expy, beside LANDWEY Building, Eti-Osa, Sangotedo 105101, Lagos</span></td></tr>' +
         '</table>' +
         '<a href="' + merchUrl + '" style="display:inline-block;margin-top:24px;padding:15px 22px;border-radius:14px;background:#17181a;color:#ffffff;font-weight:700;text-decoration:none">Explore SALT merch →</a>' +
         '<p style="margin:28px 0 0;color:#747579;font-size:13px;line-height:1.5">We look forward to seeing you.<br><strong style="color:#343539">SALT Conference Team</strong></p>' +
