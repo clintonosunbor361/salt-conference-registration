@@ -844,6 +844,15 @@
           <p class="error" id="phone-error" aria-live="polite"></p>
         </div>
 
+        <fieldset class="choice-field" id="gender-field">
+          <legend>Gender</legend>
+          <div class="choice-group">
+            <label class="choice-option"><input type="radio" name="gender" value="male" required><span>Male</span></label>
+            <label class="choice-option"><input type="radio" name="gender" value="female" required><span>Female</span></label>
+          </div>
+          <p class="choice-error" id="gender-error" aria-live="polite">Please select your gender.</p>
+        </fieldset>
+
         <fieldset class="choice-field" id="membership-field">
           <legend>Are you a member of One Church?</legend>
           <div class="choice-group">
@@ -913,8 +922,7 @@
     const confirmationCopy = document.querySelector('#confirmation-copy');
     const confirmationEmail = document.querySelector('#confirmation-email');
     const inputs = [...form.querySelectorAll('input:not([type="radio"])')];
-    const membershipField = document.querySelector('#membership-field');
-    const membershipInputs = [...membershipField.querySelectorAll('input[type="radio"]')];
+    const choiceFields = [...form.querySelectorAll('.choice-field')];
     const messages = {
       name: 'Please enter your full name.',
       email: 'Please enter a valid email address.',
@@ -955,10 +963,13 @@
       });
     });
 
-    membershipInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        membershipField.classList.remove('is-invalid');
-        if (window.gsap) gsap.fromTo(input.nextElementSibling, { scale: .97 }, { scale: 1, duration: .35, ease: 'back.out(2)' });
+    choiceFields.forEach(field => {
+      const radioInputs = [...field.querySelectorAll('input[type="radio"]')];
+      radioInputs.forEach(input => {
+        input.addEventListener('change', () => {
+          field.classList.remove('is-invalid');
+          if (window.gsap) gsap.fromTo(input.nextElementSibling, { scale: .97 }, { scale: 1, duration: .35, ease: 'back.out(2)' });
+        });
       });
     });
 
@@ -988,16 +999,20 @@
       event.preventDefault();
       feedback.classList.remove('is-success', 'is-error');
       const contactsValid = inputs.map(input => setFieldState(input)).every(Boolean);
-      const membershipValid = membershipInputs.some(input => input.checked);
-      membershipField.classList.toggle('is-invalid', !membershipValid);
-      if (!contactsValid || !membershipValid) {
+      const invalidChoiceFields = choiceFields.filter(field => {
+        const valid = [...field.querySelectorAll('input[type="radio"]')].some(input => input.checked);
+        field.classList.toggle('is-invalid', !valid);
+        return !valid;
+      });
+      if (!contactsValid || invalidChoiceFields.length) {
         const firstInvalid = inputs.find(input => !isValid(input));
         if (firstInvalid) {
           firstInvalid.focus();
           if (window.gsap) gsap.fromTo(firstInvalid.closest('.input-shell'), { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
         } else {
-          membershipInputs[0].focus();
-          if (window.gsap) gsap.fromTo(membershipField, { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
+          const firstInvalidChoice = invalidChoiceFields[0];
+          firstInvalidChoice.querySelector('input[type="radio"]').focus();
+          if (window.gsap) gsap.fromTo(firstInvalidChoice, { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
         }
         return;
       }
@@ -1015,6 +1030,7 @@
             name: form.elements.name.value.trim(),
             email: form.elements.email.value.trim(),
             phone: form.elements.phone.value.trim(),
+            gender: form.elements.gender.value,
             oneChurchMember: form.elements.oneChurchMember.value
           })
         });

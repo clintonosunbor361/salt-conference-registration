@@ -1,11 +1,12 @@
 const REGISTRATION_SHEET = 'Registrations';
-const REGISTRATION_BUILD = '2026-08-15-email-dedupe-v2';
+const REGISTRATION_BUILD = '2026-08-15-gender-v1';
 const REGISTRATION_HEADERS = [
   'Registration ID',
   'Registered At',
   'Full Name',
   'Email Address',
   'Phone Number',
+  'Gender',
   'One Church Member',
   'Confirmation Status',
   'Confirmation Sent At'
@@ -61,14 +62,14 @@ function doPost(event) {
     try {
       rowNumber = findRegistrationRow_(sheet, registration.registrationId);
       if (rowNumber) {
-        const registrationStatus = sheet.getRange(rowNumber, 7).getValue();
+        const registrationStatus = sheet.getRange(rowNumber, 8).getValue();
         if (registrationStatus === 'Confirmation sent' || registrationStatus === 'Sending confirmation') {
           return jsonResponse_({ ok: true, alreadyRegistered: true });
         }
       } else {
         rowNumber = findRegistrationRowByEmail_(sheet, registration.email);
         if (rowNumber) {
-          const emailStatus = sheet.getRange(rowNumber, 7).getValue();
+          const emailStatus = sheet.getRange(rowNumber, 8).getValue();
           if (emailStatus === 'Confirmation sent' || emailStatus === 'Sending confirmation') {
             return jsonResponse_({ ok: true, alreadyRegistered: true });
           }
@@ -82,22 +83,23 @@ function doPost(event) {
           safeCell_(registration.name),
           safeCell_(registration.email),
           safeCell_(registration.phone),
+          registration.gender === 'male' ? 'Male' : 'Female',
           registration.oneChurchMember === 'yes' ? 'Yes' : 'No',
           'Pending',
           ''
         ]);
         rowNumber = sheet.getLastRow();
       }
-      sheet.getRange(rowNumber, 7).setValue('Sending confirmation');
+      sheet.getRange(rowNumber, 8).setValue('Sending confirmation');
     } finally {
       lock.releaseLock();
     }
 
     try {
       sendConfirmationEmail_(registration);
-      sheet.getRange(rowNumber, 7, 1, 2).setValues([['Confirmation sent', new Date()]]);
+      sheet.getRange(rowNumber, 8, 1, 2).setValues([['Confirmation sent', new Date()]]);
     } catch (emailError) {
-      sheet.getRange(rowNumber, 7).setValue('Email failed: ' + String(emailError.message || emailError).slice(0, 180));
+      sheet.getRange(rowNumber, 8).setValue('Email failed: ' + String(emailError.message || emailError).slice(0, 180));
       throw new Error('Registration was saved, but the confirmation email could not be sent.');
     }
 
@@ -114,6 +116,7 @@ function validateRegistration_(payload) {
     name: clean_(payload.name, 120),
     email: clean_(payload.email, 180).toLowerCase(),
     phone: clean_(payload.phone, 40),
+    gender: clean_(payload.gender, 6).toLowerCase(),
     oneChurchMember: clean_(payload.oneChurchMember, 3).toLowerCase()
   };
 
@@ -121,6 +124,7 @@ function validateRegistration_(payload) {
   if (!registration.name) throw new Error('Full name is required.');
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registration.email)) throw new Error('A valid email address is required.');
   if (!registration.phone) throw new Error('Phone number is required.');
+  if (['male', 'female'].indexOf(registration.gender) === -1) throw new Error('Gender selection is required.');
   if (['yes', 'no'].indexOf(registration.oneChurchMember) === -1) throw new Error('Membership selection is required.');
   return registration;
 }
@@ -186,11 +190,16 @@ function getOrCreateRegistrationSheet_(spreadsheet) {
 
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(REGISTRATION_HEADERS);
-    sheet.getRange(1, 1, 1, REGISTRATION_HEADERS.length)
-      .setFontWeight('bold')
-      .setBackground('#17181a')
-      .setFontColor('#ffffff');
+  } else {
+    const existingHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getDisplayValues()[0];
+    if (existingHeaders.indexOf('Gender') === -1) sheet.insertColumnBefore(6);
   }
+
+  sheet.getRange(1, 1, 1, REGISTRATION_HEADERS.length)
+    .setValues([REGISTRATION_HEADERS])
+    .setFontWeight('bold')
+    .setBackground('#17181a')
+    .setFontColor('#ffffff');
   return sheet;
 }
 

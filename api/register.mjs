@@ -33,6 +33,7 @@ export default {
       name: clean(body.name, 120),
       email: clean(body.email, 180).toLowerCase(),
       phone: clean(body.phone, 40),
+      gender: clean(body.gender, 6).toLowerCase(),
       oneChurchMember: clean(body.oneChurchMember, 3).toLowerCase()
     };
 
@@ -41,6 +42,7 @@ export default {
       !registration.name ||
       !validEmail(registration.email) ||
       !registration.phone ||
+      !['male', 'female'].includes(registration.gender) ||
       !['yes', 'no'].includes(registration.oneChurchMember)
     ) {
       return json({ ok: false, error: 'Please provide valid registration details.' }, 400);
