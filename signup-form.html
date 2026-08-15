@@ -235,6 +235,7 @@
     }
 
     @media (min-width: 761px) {
+      h1 { font-size: clamp(38px, 4vw, 52px); }
       .title-line { display: block; }
     }
 
@@ -381,42 +382,9 @@
       background: linear-gradient(90deg, rgba(17,18,20,.14), transparent);
     }
 
-    .form-tabs { display: none; }
     .form-step { display: block; }
 
     @media (min-width: 761px) {
-      .form-tabs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 7px;
-        margin: 0 0 24px;
-        padding: 6px;
-        border-radius: 18px;
-        background: #f1f1ef;
-      }
-
-      .form-tab {
-        min-height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        border: 0;
-        border-radius: 14px;
-        padding: 0 14px;
-        color: #77787b;
-        background: transparent;
-        font: inherit;
-        font-size: 12px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-      }
-
-      .form-tab:hover { color: #343539; }
-      .form-tab[aria-selected="true"] { color: #fff; background: #17181b; box-shadow: 0 8px 18px rgba(17,18,20,.16); }
-      .form-tab:focus-visible { outline: 3px solid rgba(72,159,222,.38); outline-offset: 2px; }
-      .tab-index { font-size: 10px; opacity: .58; }
       .form-step { display: none; }
       .form-step.is-active { display: block; }
     }
@@ -896,12 +864,7 @@
       <div class="divider" aria-hidden="true"></div>
 
       <form id="signup-form" novalidate>
-        <div class="form-tabs" role="tablist" aria-label="Registration sections">
-          <button class="form-tab" id="personal-tab" type="button" role="tab" aria-selected="true" aria-controls="personal-step" data-step-target="personal"><span class="tab-index">01</span><span>Personal Details</span></button>
-          <button class="form-tab" id="conference-tab" type="button" role="tab" aria-selected="false" aria-controls="conference-step" data-step-target="conference" tabindex="-1"><span class="tab-index">02</span><span>Conference Details</span></button>
-        </div>
-
-        <section class="form-step is-active" id="personal-step" role="tabpanel" aria-labelledby="personal-tab" data-step="personal">
+        <section class="form-step is-active" id="personal-step" data-step="personal">
           <div class="field" data-field="name">
             <label class="field-label" for="full-name">Full name</label>
             <div class="input-shell">
@@ -935,7 +898,7 @@
           </button>
         </section>
 
-        <section class="form-step" id="conference-step" role="tabpanel" aria-labelledby="conference-tab" data-step="conference">
+        <section class="form-step" id="conference-step" data-step="conference">
           <fieldset class="choice-field" id="gender-field">
             <legend>Gender</legend>
             <div class="choice-group">
@@ -1016,7 +979,6 @@
     const button = form.querySelector('button[type="submit"]');
     const buttonLabel = button.querySelector('.button-label');
     const continueButton = form.querySelector('[data-continue]');
-    const tabs = [...form.querySelectorAll('[role="tab"]')];
     const steps = [...form.querySelectorAll('.form-step')];
     const feedback = document.querySelector('.feedback-message');
     const formPanel = document.querySelector('.form-panel');
@@ -1052,26 +1014,9 @@
       return valid;
     }
 
-    function activateStep(stepName, focusTab = false) {
-      tabs.forEach(tab => {
-        const active = tab.dataset.stepTarget === stepName;
-        tab.setAttribute('aria-selected', String(active));
-        tab.tabIndex = active ? 0 : -1;
-        if (active && focusTab) tab.focus();
-      });
+    function activateStep(stepName) {
       steps.forEach(step => step.classList.toggle('is-active', step.dataset.step === stepName));
     }
-
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => activateStep(tab.dataset.stepTarget));
-      tab.addEventListener('keydown', event => {
-        if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-        event.preventDefault();
-        const direction = event.key === 'ArrowRight' ? 1 : -1;
-        const nextTab = tabs[(index + direction + tabs.length) % tabs.length];
-        activateStep(nextTab.dataset.stepTarget, true);
-      });
-    });
 
     inputs.forEach(input => {
       const inputShell = input.closest('.input-shell');
@@ -1105,7 +1050,10 @@
         if (window.gsap) gsap.fromTo(firstInvalid.closest('.input-shell'), { x: -6 }, { x: 0, duration: .45, ease: 'elastic.out(1,.35)' });
         return;
       }
-      activateStep('conference', true);
+      activateStep('conference');
+      if (matchMedia('(min-width: 761px)').matches) {
+        document.querySelector('#gender-field input').focus();
+      }
     });
 
     function showConfirmation(alreadyRegistered = false) {
