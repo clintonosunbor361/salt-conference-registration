@@ -353,11 +353,21 @@
 
     .event-venue {
       max-width: 420px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
       margin: 9px 0 0 34px;
       color: #747579;
       font-size: 12px;
       line-height: 1.48;
+      text-decoration: none;
+      transition: color 180ms ease;
     }
+
+    .event-venue svg { flex: none; width: 15px; height: 15px; margin-top: 1px; color: #55565a; }
+    .event-venue:hover { color: #343539; }
+    .event-venue:hover .event-venue-copy { text-decoration: underline; text-underline-offset: 3px; }
+    .event-venue:focus-visible { outline: 3px solid rgba(72,159,222,.38); outline-offset: 4px; border-radius: 4px; }
 
     .divider {
       height: 1px;
@@ -797,8 +807,11 @@
             <span class="event-day">19</span>
             <span class="event-month">September<span>2026</span></span>
           </div>
-          <div class="event-meta-line">Saturday · 10:00 AM WAT</div>
-          <p class="event-venue">One Church International<br>KM 23 Lekki - Epe Expy, beside LANDWEY Building, Eti-Osa, Sangotedo 105101, Lagos</p>
+          <div class="event-meta-line">Saturday - 10:00 AM WAT</div>
+          <a class="event-venue" href="https://www.google.com/maps/search/?api=1&amp;query=One%20Church%20International%2C%20KM%2023%20Lekki%20-%20Epe%20Expy%2C%20beside%20LANDWEY%20Building%2C%20Eti-Osa%2C%20Sangotedo%20105101%2C%20Lagos" target="_blank" rel="noopener noreferrer" aria-label="Open One Church International in Google Maps">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <span class="event-venue-copy"><strong>One Church International</strong><br>KM 23 Lekki - Epe Expy, beside LANDWEY Building, Eti-Osa, Sangotedo 105101, Lagos</span>
+          </a>
         </section>
       </header>
 
