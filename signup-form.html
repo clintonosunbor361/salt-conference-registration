@@ -389,6 +389,12 @@
       font-weight: 650;
     }
 
+    .optional-label {
+      margin-left: 4px;
+      color: #929397;
+      font-weight: 500;
+    }
+
     .input-shell {
       position: relative;
       min-height: 60px;
@@ -444,6 +450,25 @@
 
     input::placeholder { color: #96979a; opacity: 1; }
     input:-webkit-autofill { -webkit-text-fill-color: #17181a; -webkit-box-shadow: 0 0 0 1000px #fff inset; }
+
+    .textarea-shell { align-items: stretch; }
+
+    .textarea-shell textarea {
+      width: 100%;
+      min-height: 112px;
+      resize: vertical;
+      border: 0;
+      outline: 0;
+      padding: 18px;
+      color: #17181a;
+      background: transparent;
+      font: inherit;
+      font-size: 15px;
+      line-height: 1.5;
+      caret-color: #d983ba;
+    }
+
+    .textarea-shell textarea::placeholder { color: #96979a; opacity: 1; }
 
     .field.is-invalid .input-shell { border-color: rgba(184,50,59,.48); box-shadow: 0 0 0 4px rgba(184,50,59,.07); }
 
@@ -753,6 +778,7 @@
       .subheading { font-size: 19px; }
       .divider { margin: 27px 0; }
       .input-shell input { font-size: 16px; }
+      .textarea-shell textarea { font-size: 16px; }
 
       .confirmation { padding-top: 8px; }
       .confirmation h2 { font-size: clamp(43px, 12vw, 58px); }
@@ -861,6 +887,13 @@
           </div>
           <p class="choice-error" id="membership-error" aria-live="polite">Please select Yes or No.</p>
         </fieldset>
+
+        <div class="field" data-field="looking-forward-to">
+          <label class="field-label" for="looking-forward-to">What are you looking forward to?<span class="optional-label">(Optional)</span></label>
+          <div class="input-shell textarea-shell">
+            <textarea id="looking-forward-to" name="lookingForwardTo" rows="4" maxlength="500" placeholder="Share what you are most excited about"></textarea>
+          </div>
+        </div>
 
         <button class="submit" type="submit">
           <span class="button-content">
@@ -1030,6 +1063,7 @@
             name: form.elements.name.value.trim(),
             email: form.elements.email.value.trim(),
             phone: form.elements.phone.value.trim(),
+            lookingForwardTo: form.elements.lookingForwardTo.value.trim(),
             gender: form.elements.gender.value,
             oneChurchMember: form.elements.oneChurchMember.value
           })

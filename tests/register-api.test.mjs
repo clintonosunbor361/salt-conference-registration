@@ -79,6 +79,7 @@ test('passes through the already-registered state without exposing the secret', 
     assert.equal(result.alreadyRegistered, true);
     assert.equal(result.secret, undefined);
     assert.equal(forwardedBody.email, 'ada@example.com');
+    assert.equal(forwardedBody.lookingForwardTo, '');
     assert.equal(forwardedBody.secret, 'test-secret');
   } finally {
     globalThis.fetch = originalFetch;

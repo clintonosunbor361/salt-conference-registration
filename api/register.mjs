@@ -33,6 +33,7 @@ export default {
       name: clean(body.name, 120),
       email: clean(body.email, 180).toLowerCase(),
       phone: clean(body.phone, 40),
+      lookingForwardTo: clean(body.lookingForwardTo, 500),
       gender: clean(body.gender, 6).toLowerCase(),
       oneChurchMember: clean(body.oneChurchMember, 3).toLowerCase()
     };

@@ -1,5 +1,5 @@
 const REGISTRATION_SHEET = 'Registrations';
-const REGISTRATION_BUILD = '2026-08-15-gender-v1';
+const REGISTRATION_BUILD = '2026-08-15-looking-forward-v1';
 const REGISTRATION_HEADERS = [
   'Registration ID',
   'Registered At',
@@ -9,7 +9,8 @@ const REGISTRATION_HEADERS = [
   'Gender',
   'One Church Member',
   'Confirmation Status',
-  'Confirmation Sent At'
+  'Confirmation Sent At',
+  'Looking Forward To'
 ];
 
 /**
@@ -86,7 +87,8 @@ function doPost(event) {
           registration.gender === 'male' ? 'Male' : 'Female',
           registration.oneChurchMember === 'yes' ? 'Yes' : 'No',
           'Pending',
-          ''
+          '',
+          safeCell_(registration.lookingForwardTo)
         ]);
         rowNumber = sheet.getLastRow();
       }
@@ -116,6 +118,7 @@ function validateRegistration_(payload) {
     name: clean_(payload.name, 120),
     email: clean_(payload.email, 180).toLowerCase(),
     phone: clean_(payload.phone, 40),
+    lookingForwardTo: clean_(payload.lookingForwardTo, 500),
     gender: clean_(payload.gender, 6).toLowerCase(),
     oneChurchMember: clean_(payload.oneChurchMember, 3).toLowerCase()
   };
