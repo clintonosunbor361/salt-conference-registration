@@ -767,11 +767,13 @@
         position: sticky;
         z-index: 1;
         top: 0;
-        height: clamp(300px, 42svh, 390px);
-        min-height: 300px;
+        height: auto;
+        aspect-ratio: auto;
+        min-height: 0;
         padding: 0;
       }
-      .story-image { object-fit: cover; object-position: center 43%; }
+      .story-image-wrap { position: relative; aspect-ratio: 4 / 5; }
+      .story-image { object-fit: contain; object-position: center center; }
       .brandline { font-size: 10px; }
       .story-copy { margin: 34px 0 22px; padding: 0; }
       .story-title { max-width: 100%; font-size: clamp(47px, 14vw, 66px); }
@@ -785,7 +787,7 @@
         min-height: calc(100svh - 270px);
         padding: 36px 22px 28px;
         border-radius: 28px 28px 0 0;
-        margin-top: -34px;
+        margin-top: calc(-34px - 18.75vw);
         background: #fff;
         box-shadow: 0 -22px 46px rgba(0,0,0,.16);
         scroll-margin-top: 0;
@@ -818,7 +820,7 @@
 
     @media (max-width: 380px) {
       .story-panel { min-height: 225px; }
-      .story-panel.has-poster { height: 280px; min-height: 280px; }
+      .story-panel.has-poster { height: auto; min-height: 0; }
       .story-copy { margin: 22px 0 12px; }
       .story-text { display: none; }
       .form-panel { min-height: calc(100svh - 246px); padding: 30px 18px 22px; }
@@ -836,9 +838,9 @@
 </head>
 <body class="no-gsap">
   <main class="signup-shell" aria-labelledby="signup-title">
-    <aside class="story-panel has-poster" aria-label="SALT Conference save-the-date artwork">
+    <aside class="story-panel has-poster" aria-label="SALT Conference Made Whole artwork">
       <div class="story-image-wrap">
-        <img class="story-image" src="assets/salt-save-the-date.png" alt="The SALT Conference save-the-date artwork for 19 September 2026">
+        <img class="story-image" src="assets/salt-made-whole.jpeg" alt="SALT Conference 2026 — Made Whole. 19 September 2026 at 10 AM, 23 Lekki-Epe Expressway, beside Landwey Building, Sangotedo. Free registration." width="864" height="1080">
       </div>
     </aside>
 
